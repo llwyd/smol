@@ -22,9 +22,8 @@ _reset:
     
     # delay
     mov r0, #0xffff
-    str r0, [r6]
-    
-    str r6, [r7, #0x00]
+    str r0, [r6] 
+    str r6, [r7]
 
 delay:
     subs r0, 1

@@ -20,14 +20,22 @@ _reset:
     ldr r6, [r8, #-0x10]
     ldr r7, [r8, #-0x08]
     
-    # delay
+    /* magic number used as delay
+    * and to turn on the RCC clock*/
     mov r0, #0xffff
+    
+    /* RCC Clock Enable Port B */
     str r0, [r6] 
+
+    /* Reuse the number stored in r6
+    * to set GPIOB 3 as output */
     str r6, [r7]
 
 delay:
     subs r0, 1
     bne delay
+
+    /* Toggle LED */
     eor r3, r6
     str r3, [r7, #0x14]
     b _reset

@@ -10,26 +10,26 @@ _start:
     .word 0x4002104C
     /* Second word is always the reset vector */
     .word _reset
-
+    .word 0x48000400
 .globl _reset
 .thumb_func
 _reset:
-    /* Value to turn on the peripheral clock,
-    * also used as a delay */
-    mov r0, 0xffff
-    ldr r1, = _stext
-    ldr r2, [r1]
-    str r0, [r2]
+    /* (ab)use the program counter to retrive 
+    * addresses stored as vectors */
+    mov r8, pc
+    ldr r6, [r8, #-0x10]
+    ldr r7, [r8, #-0x08]
+    
+    # delay
+    mov r0, #0xffff
+    str r0, [r6]
+    
+    str r6, [r7, #0x00]
 
-    /* Base address for GPIO config */
-    ldr r4, = 0x48000400
-    /* Reuse the number stored in r2, as it has 
-    * the right bits set for PB3 */ 
-    str r2, [r4, #0x00]
 delay:
     subs r0, 1
     bne delay
-    eor r3, #0x8
-    str r3, [r4, #0x14]
+    eor r3, r6
+    str r3, [r7, #0x14]
     b _reset
 

@@ -1,5 +1,6 @@
 smol.bin: smol.elf
 	arm-none-eabi-objcopy -Obinary smol.elf smol.bin
+	hexdump -C smol.bin
 smol.elf: smol.o smol.ld
 	arm-none-eabi-ld -Map smol.map -Tsmol.ld -o smol.elf smol.o -print-memory-usage -nostdlib
 	arm-none-eabi-objdump -t smol.elf

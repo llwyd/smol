@@ -14,21 +14,22 @@ _start:
 .globl _reset
 .thumb_func
 _reset:
-    mov r0, 0x2
+    /* Value to turn on the peripheral clock,
+    * also used as a delay */
+    mov r0, 0xffff
     ldr r1, = _stext
     ldr r2, [r1]
     str r0, [r2]
 
-    ldr r0, = 0x48000400
+    /* Base address for GPIO config */
+    ldr r4, = 0x48000400
     /* Reuse the number stored in r2, as it has 
     * the right bits set for PB3 */ 
-    str r2, [r0, #0x00]
-loop:
-    mov r2, 0xffff
+    str r2, [r4, #0x00]
 delay:
-    subs r2, 1
+    subs r0, 1
     bne delay
     eor r3, #0x8
-    str r3, [r0, #0x14]
-    b loop
+    str r3, [r4, #0x14]
+    b _reset
 

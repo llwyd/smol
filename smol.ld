@@ -8,6 +8,7 @@ SECTIONS
     . = ORIGIN(ROM);
     .text :
     {
+        _stext = .;
         *(.text*)
         *(.rodata*)
         _etext = .;

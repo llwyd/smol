@@ -24,6 +24,10 @@ _reset:
     * the right bits set for PB3 */ 
     str r2, [r0, #0x00]
 loop:
+    mov r2, 0xffff
+delay:
+    subs r2, 1
+    bne delay
     eor r3, #0x8
     str r3, [r0, #0x14]
     b loop

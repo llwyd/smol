@@ -19,12 +19,13 @@ _reset:
     ldr r6, [pc, #-0x10]
     ldr r7, [pc, #-0x0C]
     
-    /* magic number used as delay
-    * and to turn on the RCC clock*/
-    mov r0, #0xffff
+    /* Reset value for a different RCC register
+    * is 0x11303, which makes a nice delay and
+    * can be used to set GPIO B*/
+    ldr r0, [r6, #0x1C]
     
     /* RCC Clock Enable Port B */
-    str r0, [r6] 
+    str r0, [r6]
 
     /* Reuse the number stored in r6
     * to set GPIOB 3 as output */

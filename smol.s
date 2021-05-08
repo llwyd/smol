@@ -16,9 +16,8 @@ _start:
 _reset:
     /* (ab)use the program counter to retrive 
     * addresses stored as vectors */
-    mov r8, pc
-    ldr r6, [r8, #-0x10]
-    ldr r7, [r8, #-0x08]
+    ldr r6, [pc, #-0x10]
+    ldr r7, [pc, #-0x0C]
     
     /* magic number used as delay
     * and to turn on the RCC clock*/

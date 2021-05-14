@@ -1,8 +1,4 @@
-    .text
     .syntax unified
-    .cpu cortex-m4
-    .thumb
-    .globl _start
 
 _start:
     /* This is where the stack top goes, but we dont
